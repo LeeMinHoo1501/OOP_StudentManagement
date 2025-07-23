@@ -1,55 +1,37 @@
 // main.cpp
+#include "SystemManager.h"
 #include <iostream>
-using namespace std;
 
-void showMainMenu() {
-    cout << "\n==============================\n";
-    cout << " STUDENT MANAGEMENT SYSTEM\n";
-    cout << "==============================\n";
-    cout << "1. Student Management\n";
-    cout << "2. Course Management\n";
-    cout << "3. Enrollment\n";
-    cout << "4. GPA Calculation\n";
-    cout << "5. Search / Sort\n";
-    cout << "6. Save Data\n";
-    cout << "0. Exit\n";
-    cout << "------------------------------\n";
-    cout << "Enter your choice: ";
-}
+int main()
+ {
+    SystemManager manager;
 
-int main() {
-    int choice;
-    bool running = true;
+    while (true) {
+        std::cout << "\n===== MAIN MENU =====\n";
+        std::cout << "1. Student Management\n";
+        std::cout << "2. Course Management\n";
+        std::cout << "3. Enrollment & GPA\n";
+        std::cout << "0. Exit\n";
+        std::cout << "Enter your choice: ";
 
-    while (running) {
-        showMainMenu();
-        cin >> choice;
+        int choice;
+        std::cin >> choice;
 
         switch (choice) {
             case 1:
-                cout << "[Feature] Student Management\n";
+                manager.studentMenu();
                 break;
             case 2:
-                cout << "[Feature] Course Management\n";
+                manager.courseMenu();
                 break;
             case 3:
-                cout << "[Feature] Enrollment\n";
-                break;
-            case 4:
-                cout << "[Feature] GPA Calculation\n";
-                break;
-            case 5:
-                cout << "[Feature] Search / Sort\n";
-                break;
-            case 6:
-                cout << "[Feature] Save Data\n";
+                manager.enrollmentMenu();
                 break;
             case 0:
-                cout << "Exiting...\n";
-                running = false;
-                break;
+                std::cout << "Exiting program...\n";
+                return 0;
             default:
-                cout << "Invalid choice. Please try again.\n";
+                std::cout << "Invalid choice. Please try again.\n";
         }
     }
 
