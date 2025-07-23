@@ -22,8 +22,10 @@ void Enrollment::display() const {
 
 void Enrollment::input() {
     std::cout << "Enter student ID: ";
+    std::cin.ignore();
     std::getline(std::cin, studentId);
     std::cout << "Enter course code: ";
+    std::cin.ignore();
     std::getline(std::cin, courseCode);
     std::cout << "Enter grade: ";
     std::cin >> grade;
@@ -87,9 +89,9 @@ void Enrollment::addEnrollment(std::vector<std::shared_ptr<Enrollment>>& enrollm
                                const std::vector<std::shared_ptr<Course>>& courses) {
     std::string sid, cid;
     std::cout << "Enter student ID: ";
-    std::getline(std::cin, sid);
+    std::cin>>sid;
     std::cout << "Enter course code: ";
-    std::getline(std::cin, cid);
+    std::cin>>cid;
 
     // Check student and course existence
     auto studentIt = std::find_if(students.begin(), students.end(), [&](const auto& s) {
@@ -115,9 +117,9 @@ void Enrollment::addEnrollment(std::vector<std::shared_ptr<Enrollment>>& enrollm
 void Enrollment::inputGPA(std::vector<std::shared_ptr<Enrollment>>& enrollments) {
     std::string sid, cid;
     std::cout << "Enter student ID: ";
-    std::getline(std::cin, sid);
+    std::cin>>sid;
     std::cout << "Enter course code: ";
-    std::getline(std::cin, cid);
+    std::cin>>cid;
 
     for (auto& e : enrollments) {
         if (e->getStudentId() == sid && e->getCourseCode() == cid) {
@@ -138,7 +140,7 @@ void Enrollment::calculateGPAByStudent(const std::vector<std::shared_ptr<Enrollm
                                        const std::vector<std::shared_ptr<Course>>& courses) {
     std::string sid;
     std::cout << "Enter student ID: ";
-    std::getline(std::cin, sid);
+    std::cin>>sid;
 
     auto sub = getByStudentId(enrollments, sid);
     if (sub.empty()) {

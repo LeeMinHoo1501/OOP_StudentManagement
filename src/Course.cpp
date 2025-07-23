@@ -19,12 +19,13 @@ void Course::display() const {
 
 void Course::input() {
     std::cout << "Enter course code: ";
-    std::getline(std::cin, code);
+    std::cin>>code;
     std::cout << "Enter course name: ";
+    std::cin.ignore();
     std::getline(std::cin, name);
     std::cout << "Enter course credits: ";
     std::cin >> credits;
-    std::cin.ignore(); // clear newline
+    std::cin.ignore();
 }
 
 std::vector<std::shared_ptr<Course>> Course::loadFromFile(const std::string& filename) {
@@ -59,20 +60,23 @@ void Course::displayAll(const std::vector<std::shared_ptr<Course>>& courses) {
 void Course::searchByCode(const std::vector<std::shared_ptr<Course>>& courses) {
     std::string keyword;
     std::cout << "Enter course code to search: ";
-    std::getline(std::cin, keyword);
-
+    std::cin>>keyword;
+    int flag=0;
     for (const auto& c : courses) {
         if (c->getCode() == keyword) {
             c->display();
-            return;
+            flag=1;
         }
     }
-    std::cout << "Course not found.\n";
+    if (flag==0) {
+        std::cout << "Course not found.\n";
+    }
 }
 
 void Course::searchByName(const std::vector<std::shared_ptr<Course>>& courses) {
     std::string target;
     std::cout << "Enter course name to search: ";
+    std::cin.ignore();
     std::getline(std::cin, target);
 
     bool found = false;

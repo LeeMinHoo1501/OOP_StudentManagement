@@ -24,7 +24,7 @@ void Student::display() const {
 
 void Student::input() {
     std::cout << "Enter ID: ";
-    std::getline(std::cin, id);
+    std::cin>>id;
     std::cout << "Enter name: ";
     std::getline(std::cin, name);
     std::cout << "Enter year: ";
