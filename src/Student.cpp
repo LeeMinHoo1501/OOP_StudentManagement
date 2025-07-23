@@ -26,10 +26,11 @@ void Student::input() {
     std::cout << "Enter ID: ";
     std::cin>>id;
     std::cout << "Enter name: ";
+    std::cin.ignore();
     std::getline(std::cin, name);
     std::cout << "Enter year: ";
     std::cin >> year;
-    std::cin.ignore(); // clear newline
+    std::cin.ignore(); 
 }
 
 void Student::displayAll(const std::vector<std::shared_ptr<Student>>& students) {

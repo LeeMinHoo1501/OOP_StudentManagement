@@ -1,7 +1,6 @@
 #include "../include/Enrollment.h"
 #include "../include/Student.h"
 #include "../include/Course.h"
-
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -33,25 +32,34 @@ void Enrollment::input() {
 }
 
 std::vector<std::shared_ptr<Enrollment>> Enrollment::loadFromFile(const std::string& filename) {
-    std::vector<std::shared_ptr<Enrollment>> list;
+    std::vector<std::shared_ptr<Enrollment>> enrollments;
     std::ifstream file(filename);
-    if (!file.is_open()) return list;
+    if (!file.is_open()) return enrollments;
 
-    std::string sid, cid;
-    float grade;
-    while (std::getline(file, sid) && std::getline(file, cid) && file >> grade) {
-        file.ignore();
-        list.push_back(std::make_shared<Enrollment>(sid, cid, grade));
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string studentId, courseCode, gradeStr;
+
+        if (std::getline(ss, studentId, ',') &&
+            std::getline(ss, courseCode, ',') &&
+            std::getline(ss, gradeStr)) {
+
+            double grade = std::stod(gradeStr);
+            enrollments.push_back(std::make_shared<Enrollment>(studentId, courseCode, grade));
+        }
     }
+
     file.close();
-    return list;
+    return enrollments;
 }
+
 
 void Enrollment::saveToFile(const std::string& filename, const std::vector<std::shared_ptr<Enrollment>>& enrollments) {
     std::ofstream file(filename);
     for (const auto& e : enrollments) {
-        file << e->getStudentId() << '\n'
-             << e->getCourseCode() << '\n'
+        file << e->getStudentId() << ","
+             << e->getCourseCode() << ","
              << e->getGrade() << '\n';
     }
     file.close();

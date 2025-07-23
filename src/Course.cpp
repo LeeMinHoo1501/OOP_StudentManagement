@@ -1,7 +1,12 @@
 #include "../include/Course.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <memory>
 #include <algorithm>
+
 
 Course::Course(const std::string& code, const std::string& name, int credits)
     : code(code), name(name), credits(credits) {}
@@ -33,12 +38,20 @@ std::vector<std::shared_ptr<Course>> Course::loadFromFile(const std::string& fil
     std::ifstream file(filename);
     if (!file.is_open()) return courses;
 
-    std::string code, name;
-    int credits;
-    while (std::getline(file, code) && std::getline(file, name) && file >> credits) {
-        file.ignore();
-        courses.push_back(std::make_shared<Course>(code, name, credits));
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string code, name, creditsStr;
+
+        if (std::getline(ss, code, ',') &&
+            std::getline(ss, name, ',') &&
+            std::getline(ss, creditsStr)) {
+
+            int credits = std::stoi(creditsStr);
+            courses.push_back(std::make_shared<Course>(code, name, credits));
+        }
     }
+
     file.close();
     return courses;
 }
@@ -46,7 +59,7 @@ std::vector<std::shared_ptr<Course>> Course::loadFromFile(const std::string& fil
 void Course::saveToFile(const std::string& filename, const std::vector<std::shared_ptr<Course>>& courses) {
     std::ofstream file(filename);
     for (const auto& c : courses) {
-        file << c->getCode() << '\n' << c->getName() << '\n' << c->getCredits() << '\n';
+        file << c->getCode() << "," << c->getName() <<  "," << c->getCredits() << '\n';
     }
     file.close();
 }

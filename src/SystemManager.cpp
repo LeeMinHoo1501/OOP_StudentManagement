@@ -13,6 +13,7 @@ void SystemManager::saveAll() {
     Student::saveToFile("data/students.txt", students);
     Course::saveToFile("data/courses.txt", courses);
     Enrollment::saveToFile("data/enrollments.txt", enrollments);
+    std::cout<<"All file saved successfully....."<<endl;
 }
 
 void SystemManager::studentMenu() {

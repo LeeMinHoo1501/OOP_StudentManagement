@@ -1,6 +1,3 @@
-MAD
-Toan roi rac
-2
-PCP
-C++
-2
+PCP,C++,2
+MAD,Toan roi rac,2
+OSG,He dieu hanh,1
